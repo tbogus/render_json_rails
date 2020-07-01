@@ -63,14 +63,14 @@ http://example.text/team/1.json?fields[team]=name,description&fields[user]=email
 ## Pełny opis ```render_json_config```
 
 ```ruby
-  render_json_config name: :team, # nazwa
-                     except: [:account_id, :config], # tych pól nie będzie w json-ie
-                     methods: [:image], # te metody zostaną dołączone 
-                     allowed_methods: [:members], # te metody mogą być dodane przez parametr filed np: ```fields[team]=id,members```
-                     includes: { # to mozna dołączać za pomoca parametru ```include`` np ?include=users,category
-                       users: Users,
-                       cateogry: Category,
-                     }
+render_json_config name: :team, 
+  except: [:account_id, :config], # tych pól nie będzie w json-ie
+  methods: [:image], # te metody zostaną dołączone 
+  allowed_methods: [:members], # te metody mogą być dodane przez parametr ```fileds``` np: ```fields[team]=id,members```
+  includes: { # to mozna dołączać za pomoca parametru ```include``` np ```?include=users,category```
+   users: Users,
+   cateogry: Category,
+  }
 ```
 
 ## Installation
