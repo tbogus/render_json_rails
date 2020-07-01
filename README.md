@@ -3,7 +3,7 @@
 RenderJsonRails pozwala w łatwy sposób dodać możliwość renderowania JSON z ActiveRecord-ów z zależnościami (has_many itp).
 Dzięki temu łatwo jest stworzyć backend Json API np. do pracy z Reactem lub Vue.js
 
-Przykład
+## Przykład
 
 ```ruby
 
@@ -60,6 +60,18 @@ i możemy łączyć to z include
 http://example.text/team/1.json?fields[team]=name,description&fields[user]=email,name&include=users
 ```
 
+## Pełny opis ```render_json_config```
+
+```ruby
+  render_json_config name: :team, # nazwa
+                     except: [:account_id, :config], # tych pól nie będzie w json-ie
+                     methods: [:image], # te metody zostaną dołączone 
+                     allowed_methods: [:members], # te metody mogą być dodane przez parametr filed np: ```fields[team]=id,members```
+                     includes: { # to mozna dołączać za pomoca parametru ```include`` np ?include=users,category
+                       users: Users,
+                       cateogry: Category,
+                     }
+```
 
 ## Installation
 
