@@ -57,14 +57,14 @@ module RenderJsonRails
           include_options = []
           @render_json_config[:includes].each do |name, klass|
             if includes.include?(name.to_s)
-              includes2 = RenderJsonOptions.includes_for_model(includes: includes, model: name.to_s)
+              includes2 = RenderJsonRails::Concern.includes_for_model(includes: includes, model: name.to_s)
               # raise includes2.inspect + ' ' + includes.inspect
               include_options << { name => klass.render_json_options(includes: includes2, fields: fields) }
             end
           end if @render_json_config[:includes]
 
           # if includes.include?('questions')
-          #   includes2 = RenderJsonOptions.includes_for_model(includes: includes, model: 'questions')
+          #   includes2 = RenderJsonRails::Concern.includes_for_model(includes: includes, model: 'questions')
           #   # raise includes2.inspect + ' ' + includes.inspect
           #   include_options << { questions: Organize::Question.render_json_options(includes: includes2, fields: fields) }
           # end
