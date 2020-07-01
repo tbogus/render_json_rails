@@ -33,6 +33,8 @@ end
 Dodajemy też w kontrolerze ```teams_controller.rb```
 
 ```ruby
+  include RenderJsonRails::Helper
+  
   def index
     @team = Team.all
     respond_to do |format|
