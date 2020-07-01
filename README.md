@@ -1,8 +1,55 @@
 # RenderJsonRails
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/render_json_rails`. To experiment with that code, run `bin/console` for an interactive prompt.
+RenderJsonRails pozwala w łatwy sposób dodać możliwość renderowania JSON z ActiveRecord-ów z zależnościami (has_many itp)
 
-TODO: Delete this and the text above, and describe your gem
+Przykład
+
+```ruby
+
+class Team
+  has_many :users
+  
+  include RenderJsonRails::Concern
+  
+  render_json_config name: :team,
+                     except: [:account_id, :secret_field]
+                     methods: [:get_full_name],
+                     includes: {
+                       users: User,
+                     }
+end
+```
+
+Dodajemy też w kontrolerze ```teams_controller.rb```
+
+```ruby
+  def index
+    @team = Team.all
+    respond_to do |format|
+      format.html
+      format.json { render_json @team }
+    end
+  end
+```  
+  
+i możemy już otrzymać JSON team-u wraz z userami
+
+```html
+http://example.text/team/1.json?include=users
+```
+
+możemy też określić jakie pola mają być w json
+
+```html
+http://example.text/team/1.json?fields[team]=name,description
+```
+
+i możemy łączyć to z include
+
+```html
+http://example.text/team/1.json?fields[team]=name,description&fields[user]=email,name&include=users
+```
+
 
 ## Installation
 
@@ -10,12 +57,6 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem 'render_json_rails', git: 'https://github.com/intum/render_json_rails'
-
-# or
-
-source "https://rubygems.pkg.github.com/intum" do
-  gem "render_json_rails"
-end
 ```
 
 And then execute:
@@ -26,20 +67,12 @@ Or install it yourself as:
 
     $ gem install render_json_rails
 
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/render_json_rails.
+Bug reports and pull requests are welcome on GitHub at https://github.com/intum/render_json_rails.
 
+
+## TMP
 
 Tworzenie gema
 
