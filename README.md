@@ -1,6 +1,7 @@
 # RenderJsonRails
 
-RenderJsonRails pozwala w łatwy sposób dodać możliwość renderowania JSON z ActiveRecord-ów z zależnościami (has_many itp)
+RenderJsonRails pozwala w łatwy sposób dodać możliwość renderowania JSON z ActiveRecord-ów z zależnościami (has_many itp).
+Dzięki temu łatwo jest stworzyć backend Json API np. do pracy z Reactem lub Vue.js
 
 Przykład
 
