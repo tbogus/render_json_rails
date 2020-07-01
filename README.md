@@ -13,10 +13,19 @@ class Team < ActiveRecord::Base
   include RenderJsonRails::Concern
   
   render_json_config name: :team,
-                     except: [:account_id, :secret_field]
-                     methods: [:get_full_name],
                      includes: {
-                       users: User,
+                       users: User
+                     }
+end
+
+class User < ActiveRecord::Base
+  belongs_to :team
+  
+  include RenderJsonRails::Concern
+  
+  render_json_config name: :user,
+                     includes: {
+                       team: Team
                      }
 end
 ```
