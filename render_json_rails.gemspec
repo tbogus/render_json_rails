@@ -7,9 +7,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Marcin"]
   spec.email         = ["marcin@radgost.com"]
 
-  spec.summary       = "Simle JSON render like JonApi"
+  spec.summary       = "Simle JSON API render like JonApi"
   spec.description   = "render json with 'includes' and 'fields' with simple config"
-  spec.homepage      = "https://radgost.com/gems/render_json_rails"
+  spec.homepage      = "https://github.com/intum/render_json_rails"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
