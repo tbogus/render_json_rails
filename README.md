@@ -7,7 +7,7 @@ Przykład
 
 ```ruby
 
-class Team
+class Team < ActiveRecord::Base
   has_many :users
   
   include RenderJsonRails::Concern
