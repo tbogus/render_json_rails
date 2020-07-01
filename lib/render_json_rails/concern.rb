@@ -91,6 +91,5 @@ module RenderJsonRails
       includes.find_all{ |el| el.present? }
       # raise includes.to_json
     end
-
   end
 end
