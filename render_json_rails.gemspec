@@ -3,19 +3,20 @@ require_relative 'lib/render_json_rails/version'
 Gem::Specification.new do |spec|
   spec.name          = "render_json_rails"
   spec.version       = RenderJsonRails::VERSION
+  spec.licenses      = ['MIT']
   spec.authors       = ["Marcin"]
   spec.email         = ["marcin@radgost.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "Simle JSON render like JonApi"
+  spec.description   = "render json with 'includes' and 'fields' with simple config"
+  spec.homepage      = "https://radgost.com/gems/render_json_rails"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+  # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
-  spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  # spec.metadata["https://radgost.pl/gems"] = spec.homepage
+  # spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
+  # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
