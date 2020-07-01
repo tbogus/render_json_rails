@@ -45,19 +45,19 @@ Dodajemy też w kontrolerze ```teams_controller.rb```
 i możemy już otrzymać JSON team-u wraz z userami
 
 ```html
-http://example.test/team/1.json?include=users
+http://example.test/teams/1.json?include=users
 ```
 
 możemy też określić jakie pola mają być w json
 
 ```html
-http://example.test/team/1.json?fields[team]=name,description
+http://example.test/teams/1.json?fields[team]=name,description
 ```
 
 i możemy łączyć to z include
 
 ```html
-http://example.text/team/1.json?fields[team]=name,description&fields[user]=email,name&include=users
+http://example.text/teams/1.json?fields[team]=name,description&fields[user]=email,name&include=users
 ```
 
 ## Pełny opis ```render_json_config```
