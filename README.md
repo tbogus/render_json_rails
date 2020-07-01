@@ -80,7 +80,7 @@ render_json_config name: :team,
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'render_json_rails', git: 'https://github.com/intum/render_json_rails'
+gem 'render_json_rails'
 ```
 
 And then execute:
