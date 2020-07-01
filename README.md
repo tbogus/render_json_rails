@@ -95,14 +95,3 @@ Or install it yourself as:
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/intum/render_json_rails.
 
-
-## TMP
-
-Tworzenie gema
-
-```
-gem build render_json_rails.gemspec
-
-gem push --key github --host https://rubygems.pkg.github.com/intum render_json_rails-0.1.XXX.gem
-```
-
