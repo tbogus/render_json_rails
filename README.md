@@ -9,6 +9,10 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
+gem 'render_json_rails', git: 'https://github.com/intum/render_json_rails'
+
+# or
+
 source "https://rubygems.pkg.github.com/intum" do
   gem "render_json_rails"
 end
