@@ -41,7 +41,6 @@ module RenderJsonRails
         # @render_json_config[:methods] = [:image]
       end
 
-      # rubocop:disable Lint/UnusedMethodArgument
       def render_json_options(includes: nil, fields: nil, additional_config: nil)
         raise "należy skonfigurowac render_json metodą: render_json_config" if !defined?(@render_json_config)
 
@@ -58,38 +57,49 @@ module RenderJsonRails
           @render_json_config[:includes].each do |name, klass|
             if includes.include?(name.to_s)
               includes2 = RenderJsonRails::Concern.includes_for_model(includes: includes, model: name.to_s)
-              # raise includes2.inspect + ' ' + includes.inspect
               include_options << { name => klass.render_json_options(includes: includes2, fields: fields) }
             end
           end if @render_json_config[:includes]
 
-          # if includes.include?('questions')
-          #   includes2 = RenderJsonRails::Concern.includes_for_model(includes: includes, model: 'questions')
-          #   # raise includes2.inspect + ' ' + includes.inspect
-          #   include_options << { questions: Organize::Question.render_json_options(includes: includes2, fields: fields) }
-          # end
           options[:include] = include_options
+          options = deep_meld(options, additional_config) if additional_config
+
+          options
+        end # render_json_options
+
+
+      end # class_methods
+
+      def self.includes_for_model(includes:, model:)
+        includes = includes.map do |el|
+          if el.start_with?(model + '.')
+            el = el.gsub(/^#{model}\./, '')
+          else
+            el = nil
+          end
         end
+        includes.find_all{ |el| el.present? }
+        # raise includes.to_json
+      end
 
-        options
-      end # render_json_options
-      # rubocop:enable Lint/UnusedMethodArgument
+      private
 
+      def deep_meld(h1, h2)
+        h1.deep_merge(h2) do |key, this_val, other_val|
+          if this_val != nil && other_val == nil
+            this_val
+          elsif this_val == nil && other_val != nil
+            other_val
+          elsif this_val.is_a?(Array) && other_val.is_a?(Array)
+            this_val | other_val
+          elsif this_val.is_a?(Hash) && other_val.is_a?(Hash)
+            deep_meld(this_val, other_val)
+          else
+            [this_val, other_val]
 
-    end # class_methods
-
-    def self.includes_for_model(includes:, model:)
-      # include.split(',')
-      # includes.delete(to_remove)
-      includes = includes.map do |el|
-        if el.start_with?(model + '.')
-          el = el.gsub(/^#{model}\./, '')
-        else
-          el = nil
+          end
         end
       end
-      includes.find_all{ |el| el.present? }
-      # raise includes.to_json
     end
   end
 end
