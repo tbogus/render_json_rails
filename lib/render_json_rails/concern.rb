@@ -24,10 +24,10 @@ module RenderJsonRails
 
         options = {}
         if fields && fields[name].present?
-          options[:only] = fields[name].split(',').find_all{ |el| !except.include?(el.to_sym) }
-          options[:methods] = methods&.find_all{ |el| options[:only].include?(el.to_s) }
+          options[:only] = fields[name].split(',').find_all { |el| !except.include?(el.to_sym) }
+          options[:methods] = methods&.find_all { |el| options[:only].include?(el.to_s) }
           if allowed_methods
-            options[:methods] = (options[:methods] || []) | allowed_methods.find_all{ |el| options[:only].include?(el.to_s) }
+            options[:methods] = (options[:methods] || []) | allowed_methods.find_all { |el| options[:only].include?(el.to_s) }
           end
         else
           options[:except] = except
@@ -62,42 +62,40 @@ module RenderJsonRails
           end if @render_json_config[:includes]
 
           options[:include] = include_options
-          options = deep_meld(options, additional_config) if additional_config
-
-          options
-        end # render_json_options
-
-
-      end # class_methods
-
-      def self.includes_for_model(includes:, model:)
-        includes = includes.map do |el|
-          if el.start_with?(model + '.')
-            el = el.gsub(/^#{model}\./, '')
-          else
-            el = nil
-          end
         end
-        includes.find_all{ |el| el.present? }
-        # raise includes.to_json
+
+        options = deep_meld(options, additional_config) if additional_config
+        options
+      end # render_json_options
+    end # class_methods
+
+    def self.includes_for_model(includes:, model:)
+      includes = includes.map do |el|
+        if el.start_with?(model + '.')
+          el = el.gsub(/^#{model}\./, '')
+        else
+          el = nil
+        end
       end
+      includes.find_all { |el| el.present? }
+      # raise includes.to_json
+    end
 
-      private
+    private
 
-      def deep_meld(h1, h2)
-        h1.deep_merge(h2) do |key, this_val, other_val|
-          if this_val != nil && other_val == nil
-            this_val
-          elsif this_val == nil && other_val != nil
-            other_val
-          elsif this_val.is_a?(Array) && other_val.is_a?(Array)
-            this_val | other_val
-          elsif this_val.is_a?(Hash) && other_val.is_a?(Hash)
-            deep_meld(this_val, other_val)
-          else
-            [this_val, other_val]
+    def deep_meld(h1, h2)
+      h1.deep_merge(h2) do |key, this_val, other_val|
+        if this_val != nil && other_val == nil
+          this_val
+        elsif this_val == nil && other_val != nil
+          other_val
+        elsif this_val.is_a?(Array) && other_val.is_a?(Array)
+          this_val | other_val
+        elsif this_val.is_a?(Hash) && other_val.is_a?(Hash)
+          deep_meld(this_val, other_val)
+        else
+          [this_val, other_val]
 
-          end
         end
       end
     end

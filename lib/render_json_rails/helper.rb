@@ -27,7 +27,7 @@ module RenderJsonRails
       else
         class_object = object.class
       end
-      includes = params[:include].to_s.split(',').map{ |el| el.to_s.strip } if params[:include]
+      includes = params[:include].to_s.split(',').map { |el| el.to_s.strip } if params[:include]
       options = class_object.render_json_options(
         includes: includes,
         fields: params[:fields],
