@@ -64,7 +64,7 @@ module RenderJsonRails
           options[:include] = include_options
         end
 
-        options = deep_meld(options, additional_config) if additional_config
+        options = RenderJsonRails::Concern.deep_meld(options, additional_config) if additional_config
         options
       end # render_json_options
     end # class_methods
@@ -83,7 +83,7 @@ module RenderJsonRails
 
     private
 
-    def deep_meld(h1, h2)
+    def self.deep_meld(h1, h2)
       h1.deep_merge(h2) do |key, this_val, other_val|
         if this_val != nil && other_val == nil
           this_val
