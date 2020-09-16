@@ -38,7 +38,6 @@ module RenderJsonRails
 
       def render_json_config(config)
         @render_json_config = config
-        # @render_json_config[:methods] = [:image]
       end
 
       def render_json_options(includes: nil, fields: nil, additional_config: nil)
@@ -64,7 +63,7 @@ module RenderJsonRails
           options[:include] = include_options
         end
 
-        options = deep_meld(options, additional_config) if additional_config
+        options = RenderJsonRails::Concern.deep_meld(options, additional_config) if additional_config
         options
       end # render_json_options
     end # class_methods
@@ -78,12 +77,11 @@ module RenderJsonRails
         end
       end
       includes.find_all { |el| el.present? }
-      # raise includes.to_json
     end
 
     private
 
-    def deep_meld(h1, h2)
+    def self.deep_meld(h1, h2)
       h1.deep_merge(h2) do |key, this_val, other_val|
         if this_val != nil && other_val == nil
           this_val
@@ -95,7 +93,6 @@ module RenderJsonRails
           deep_meld(this_val, other_val)
         else
           [this_val, other_val]
-
         end
       end
     end
