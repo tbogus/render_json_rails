@@ -76,6 +76,10 @@ render_json_config name: :team,
   }
 ```
 
+UWAGA.
+Jeśli jest dodany parametr default_fields, to nie wypisujemy wszystkich możliwych pól.
+Pola z default_fields są zawsze wyświetlane (chyba ze sa rownież w except).
+
 ## Installation
 
 Add this line to your application's Gemfile:

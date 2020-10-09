@@ -17,14 +17,18 @@ module RenderJsonRails
       #  zostaną one wyświelone w json-ie
       # TODO:
       # [ ] spradzanie czy parametry "fields" i "include" sa ok i jesli nie to error
-      def default_json_options(name:, fields: nil, except: nil, methods: nil, allowed_methods: nil)
+      def default_json_options(name:, default_fields: nil, fields: nil, except: nil, methods: nil, allowed_methods: nil)
         # name ||= self.name.underscore.gsub('/', '_')
         # raise self.name.underscore.gsub('/', '_')
         except ||= [:account_id, :agent, :ip]
-
+        fields_present = fields && fields[name].present?
         options = {}
-        if fields && fields[name].present?
-          options[:only] = fields[name].split(',').find_all { |el| !except.include?(el.to_sym) }
+
+        if default_fields.present? || fields_present
+          fields_for_render = default_fields || []
+          fields_for_render += fields[name].split(",") if fields_present
+
+          options[:only] = fields_for_render.find_all { |el| !except.include?(el.to_sym) }
           options[:methods] = methods&.find_all { |el| options[:only].include?(el.to_s) }
           if allowed_methods
             options[:methods] = (options[:methods] || []) | allowed_methods.find_all { |el| options[:only].include?(el.to_s) }
@@ -45,6 +49,7 @@ module RenderJsonRails
 
         options = default_json_options(
           name: @render_json_config[:name].to_s,
+          default_fields: @render_json_config[:default_fields],
           fields: fields,
           except: @render_json_config[:except],
           methods: @render_json_config[:methods],
