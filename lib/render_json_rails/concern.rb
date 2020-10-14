@@ -21,14 +21,16 @@ module RenderJsonRails
         # name ||= self.name.underscore.gsub('/', '_')
         # raise self.name.underscore.gsub('/', '_')
         except ||= [:account_id, :agent, :ip]
-        fields_present = fields && fields[name].present?
         options = {}
 
-        if default_fields.present? || fields_present
-          fields_for_render = default_fields || []
-          fields_for_render += fields[name].split(",") if fields_present
-
-          options[:only] = fields_for_render.find_all { |el| !except.include?(el.to_sym) }
+        if fields && fields[name].present?
+          options[:only] = fields[name].split(",").find_all { |el| !except.include?(el.to_sym) }
+          options[:methods] = methods&.find_all { |el| options[:only].include?(el.to_s) }
+          if allowed_methods
+            options[:methods] = (options[:methods] || []) | allowed_methods.find_all { |el| options[:only].include?(el.to_s) }
+          end
+        elsif default_fields.present?
+          options[:only] = default_fields.find_all { |el| !except.include?(el.to_sym) }
           options[:methods] = methods&.find_all { |el| options[:only].include?(el.to_s) }
           if allowed_methods
             options[:methods] = (options[:methods] || []) | allowed_methods.find_all { |el| options[:only].include?(el.to_s) }
