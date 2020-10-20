@@ -64,6 +64,9 @@ module RenderJsonRails
         end
 
         options = RenderJsonRails::Concern.deep_meld(options, additional_config) if additional_config
+
+        options.delete(:methods) if options[:methods] == nil
+
         options
       end # render_json_options
     end # class_methods
