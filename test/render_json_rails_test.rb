@@ -26,9 +26,9 @@ class RenderJsonRailsTest < Minitest::Test
     }
     assert_equal expected, out, "out: #{out}"
 
-    out = TestModel1.render_json_options(fields: {'model1' => "id,account_id,name" })
+    out = TestModel1.render_json_options(fields: {'model1' => "id,account_id  , name" })
     expected = {
-      only: ['id', 'name'],
+      only: [:id, :name],
     }
     assert_equal expected, out, "out: #{out}"
   end
