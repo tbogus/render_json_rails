@@ -1,5 +1,7 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
+# require 'active_support/core_ext/object/blank'
+# require 'active_support'
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
