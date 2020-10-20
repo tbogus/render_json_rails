@@ -9,9 +9,9 @@ Dzięki temu łatwo jest stworzyć backend Json API np. do pracy z Reactem lub V
 
 class Team < ActiveRecord::Base
   has_many :users
-  
+
   include RenderJsonRails::Concern
-  
+
   render_json_config name: :team,
                      includes: {
                        users: User
@@ -20,9 +20,9 @@ end
 
 class User < ActiveRecord::Base
   belongs_to :team
-  
+
   include RenderJsonRails::Concern
-  
+
   render_json_config name: :user,
                      includes: {
                        team: Team
@@ -34,7 +34,7 @@ Dodajemy też w kontrolerze ```teams_controller.rb```
 
 ```ruby
   include RenderJsonRails::Helper
-  
+
   def index
     @team = Team.all
     respond_to do |format|
@@ -42,8 +42,8 @@ Dodajemy też w kontrolerze ```teams_controller.rb```
       format.json { render_json @team }
     end
   end
-```  
-  
+```
+
 i możemy już otrzymać JSON team-u wraz z userami
 
 ```html
@@ -65,9 +65,9 @@ http://example.text/teams/1.json?fields[team]=name,description&fields[user]=emai
 ## Pełny opis ```render_json_config```
 
 ```ruby
-render_json_config name: :team, 
+render_json_config name: :team,
   except: [:account_id, :config], # tych pól nie będzie w json-ie
-  methods: [:image], # te metody zostaną dołączone 
+  methods: [:image], # te metody zostaną dołączone
   allowed_methods: [:members], # te metody mogą być dodane przez parametr fileds np: fields[team]=id,members
   includes: { # to mozna dołączać za pomoca parametru include np include=users,category
    users: Users,
@@ -90,6 +90,13 @@ And then execute:
 Or install it yourself as:
 
     $ gem install render_json_rails
+
+## Tests
+
+```
+rake test
+```
+
 
 ## Contributing
 
