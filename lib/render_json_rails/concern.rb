@@ -24,7 +24,7 @@ module RenderJsonRails
 
         options = {}
         if fields && fields[name].present?
-          options[:only] = fields[name].split(',').find_all { |el| !except.include?(el.to_sym) }
+          options[:only] = fields[name].split(',').map{ |e| e.to_s.strip.to_sym }.find_all { |el| !except.include?(el) }
           options[:methods] = methods&.find_all { |el| options[:only].include?(el.to_s) }
           if allowed_methods
             options[:methods] = (options[:methods] || []) | allowed_methods.find_all { |el| options[:only].include?(el.to_s) }
